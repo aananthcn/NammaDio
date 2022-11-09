@@ -21,7 +21,7 @@
 #ifndef BRD_DIO_H
 #define BRD_DIO_H
 
-#include <ostypes.h>
+#include <base_types.h>
 
 void bsp_set_dio_output(u32 ch, u32 level);
 
