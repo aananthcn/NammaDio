@@ -20,7 +20,7 @@
  */
 #include <stddef.h>
 #include <Dio.h>
-#include <brd_dio.h> // board specific dio implementations
+#include <bsp_dio.h> // board specific dio implementations
 
 #include <Dio_cfg.h>
 
@@ -40,7 +40,7 @@ void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level) {
 	}
 
 	port_ch = DioChan2PortLookup[ChannelId];
-	brd_set_dio_output(port_ch, Level);
+	bsp_set_dio_output(port_ch, Level);
 }
 
 
@@ -52,7 +52,7 @@ Dio_PortLevelType Dio_ReadPort(Dio_PortType PortId) {
 
 
 void Dio_WritePort(Dio_PortType PortId, Dio_PortLevelType Level) {
-	//brd_set_port_output(port, level)
+	//bsp_set_port_output(port, level)
 }
 
 

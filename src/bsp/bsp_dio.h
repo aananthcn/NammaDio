@@ -1,5 +1,5 @@
 /*
- * Created on Wed Sep 21 2022 6:54:21 PM
+ * Created on Wed Sep 21 2022 6:54:28 PM
  *
  * The MIT License (MIT)
  * Copyright (c) 2022 Aananth C N
@@ -18,15 +18,12 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#ifndef BRD_DIO_H
+#define BRD_DIO_H
+
 #include <ostypes.h>
-#include <rp2040.h>
+
+void bsp_set_dio_output(u32 ch, u32 level);
 
 
-void brd_set_dio_output(u32 ch, u32 level) {
-	if (level) {
-		SIO_GPIO_OUT |= 1 << ch;
-	}
-	else {
-		SIO_GPIO_OUT &= ~(1 << ch);
-	}
-}
+#endif
