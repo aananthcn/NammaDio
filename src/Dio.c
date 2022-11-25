@@ -25,13 +25,24 @@
 #include <Dio_cfg.h>
 
 
+//  Returns the value of the specified DIO channel
 Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId) {
 	Dio_LevelType level = STD_LOW;
+
+	if (ChannelId > MAX_PORT_ID) {
+		// log error here
+		return STD_LOW;
+	}
+
+	if (bsp_get_dio_input(ChannelId)) {
+		level = STD_HIGH;
+	}
 
 	return level;
 }
 
 
+// Service to set a level of a channel
 void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level) {
 	Dio_PortType port_ch;
 	if (ChannelId > MAX_PORT_ID) {
@@ -44,20 +55,24 @@ void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level) {
 }
 
 
+// Returns the level of all channels of that port
 Dio_PortLevelType Dio_ReadPort(Dio_PortType PortId) {
 	Dio_PortLevelType port_level = 0;
 
+	// TODO: Implement the function
 	return port_level;
 }
 
 
 void Dio_WritePort(Dio_PortType PortId, Dio_PortLevelType Level) {
 	//bsp_set_port_output(port, level)
+	// TODO: Implement the function
 }
 
 
 void Dio_WriteChannelGroup(const Dio_ChannelGroupType* ChannelGroupIdPtr, Dio_PortLevelType Level) {
 	// implement the channel group port write
+	// TODO: Implement the function
 }
 
 
@@ -78,6 +93,7 @@ Dio_LevelType Dio_FlipChannel(Dio_ChannelType ChannelId) {
 	Dio_LevelType level = STD_LOW;
 
 	// read the channel, flip it and return
+	// TODO: Implement the function
 
 	return level;
 }
@@ -85,4 +101,5 @@ Dio_LevelType Dio_FlipChannel(Dio_ChannelType ChannelId) {
 
 void Dio_MaskedWritePort(Dio_PortType PortId, Dio_PortLevelType Level, Dio_PortLevelType Mask) {
 	// PortId = level & mask
+	// TODO: Implement the function
 }

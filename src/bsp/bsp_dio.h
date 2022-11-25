@@ -24,6 +24,7 @@
 #include <base_types.h>
 
 void bsp_set_dio_output(u32 ch, u32 level);
+u8 bsp_get_dio_input(u32 ch);
 
 
 #endif

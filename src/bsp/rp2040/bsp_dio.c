@@ -30,3 +30,17 @@ void bsp_set_dio_output(u32 ch, u32 level) {
 		SIO_GPIO_OUT &= ~(1 << ch);
 	}
 }
+
+
+
+u8 bsp_get_dio_input(u32 ch) {
+	u32 bit_value;
+	u8 level = 0;
+
+	bit_value = SIO_GPIO_IN & (1 << ch);
+	if (bit_value) {
+		level = 1;
+	}
+
+	return level;
+}
