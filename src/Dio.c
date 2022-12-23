@@ -20,7 +20,7 @@
  */
 #include <stddef.h>
 #include <Dio.h>
-#include <bsp_dio.h> // board specific dio implementations
+#include <bsp/bsp_dio.h> // board specific dio implementations
 
 #include <Dio_cfg.h>
 
