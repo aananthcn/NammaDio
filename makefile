@@ -41,6 +41,7 @@ INCDIRS  += -I ${DIO_PATH}/src \
 	    -I ${MCU_STARTUP_PATH} \
 
 
+$(info  )
 $(info compiling Dio source files)
 
 
