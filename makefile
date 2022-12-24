@@ -50,7 +50,7 @@ DIO_OBJS := \
 	${DIO_PATH}/cfg/Dio_cfg.o
 
 
-LDFLAGS := -g
+LDFLAGS := -g -relocatable
 CFLAGS  := -Werror ${INCDIRS} -g
 ASFLAGS := ${INCDIRS} -g
 TARGET 	:= libDio.la
@@ -62,8 +62,7 @@ all: $(TARGET)
 LIB_OBJS := $(DIO_OBJS)
 
 $(TARGET): $(LIB_OBJS)
-	$(AR) r $@ $^
-	$(RANLIB) $@
+	$(LD) ${LDFLAGS} -o $@ $^
 
 clean:
 	$(RM) $(LIB_OBJS) $(TARGET)
