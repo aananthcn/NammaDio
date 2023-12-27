@@ -36,7 +36,7 @@ INCDIRS  += -I ${DIO_PATH}/src \
 	    -I ${PORT_PATH}/cfg \
 	    -I ${CAR_OS_INC_PATH}/autosar \
 	    -I ${CAR_OS_INC_PATH}/car_os \
-	    -I ${CAR_OS_BOARD_PATH} \
+	    -I ${CAR_OS_BOARDSOC_PATH} \
 	    -I ${MCU_PATH}/src 
 
 
