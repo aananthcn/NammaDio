@@ -46,7 +46,6 @@ $(info compiling Dio source files)
 
 DIO_OBJS := \
 	${DIO_PATH}/src/Dio.o \
-	${DIO_PATH}/src/bsp/rp2040/bsp_dio.o \
 	${DIO_PATH}/cfg/Dio_cfg.o
 
 

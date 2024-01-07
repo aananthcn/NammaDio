@@ -19,24 +19,27 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <stddef.h>
-#include <Dio.h>
-#include <bsp/bsp_dio.h> // board specific dio implementations
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h> // for LOG_DBG()
 
+#include <Dio.h>
 #include <Dio_cfg.h>
 
+// Global variables
+LOG_MODULE_REGISTER(Dio, LOG_LEVEL_DBG);
 
 //  Returns the value of the specified DIO channel
 Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId) {
 	Dio_LevelType level = STD_LOW;
+	const struct gpio_dt_spec *dt_spec;
 
 	if (ChannelId > MAX_PORT_ID) {
-		// log error here
-		return STD_LOW;
+		LOG_DBG("ERROR: %s invalid ChannelId = %d!", __func__, ChannelId);
+		return 0xFF;
 	}
 
-	if (bsp_get_dio_input(ChannelId)) {
-		level = STD_HIGH;
-	}
+	dt_spec = port_get_zephyr_dt_spec(ChannelId);
+	level = gpio_pin_get_dt(dt_spec);
 
 	return level;
 }
@@ -44,14 +47,15 @@ Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId) {
 
 // Service to set a level of a channel
 void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level) {
-	Dio_PortType port_ch;
+	const struct gpio_dt_spec *dt_spec;
+
 	if (ChannelId > MAX_PORT_ID) {
-		// log error here
+		LOG_DBG("ERROR: %s invalid ChannelId = %d!", __func__, ChannelId);
 		return;
 	}
 
-	port_ch = DioChan2PortLookup[ChannelId];
-	bsp_set_dio_output(port_ch, Level);
+	dt_spec = port_get_zephyr_dt_spec(ChannelId);
+	gpio_pin_set_dt(dt_spec, Level);
 }
 
 
@@ -91,9 +95,16 @@ void Dio_GetVersionInfo(Std_VersionInfoType* VersionInfo) {
 
 Dio_LevelType Dio_FlipChannel(Dio_ChannelType ChannelId) {
 	Dio_LevelType level = STD_LOW;
+	const struct gpio_dt_spec *dt_spec;
 
-	// read the channel, flip it and return
-	// TODO: Implement the function
+	if (ChannelId > MAX_PORT_ID) {
+		LOG_DBG("ERROR: %s invalid ChannelId = %d!", __func__, ChannelId);
+		return 0xFF;
+	}
+
+	dt_spec = port_get_zephyr_dt_spec(ChannelId);
+	gpio_pin_toggle_dt(dt_spec);
+	level = gpio_pin_get_dt(dt_spec);
 
 	return level;
 }
