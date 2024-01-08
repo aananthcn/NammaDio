@@ -26,7 +26,7 @@ RANLIB=${COMPILER}ranlib
 OBJCOPY=${COMPILER}objcopy
 
 
-include ${ROOT_DIR}/path_defs.mk
+include ${CAR_OS_PATH}/path_defs.mk
 
 
 INCDIRS  += -I ${DIO_PATH}/src \
@@ -34,11 +34,10 @@ INCDIRS  += -I ${DIO_PATH}/src \
 	    -I ${DIO_PATH}/cfg \
 	    -I ${PORT_PATH}/src \
 	    -I ${PORT_PATH}/cfg \
-	    -I ${MCU_PATH}/src \
-	    -I ${MCU_PATH}/src/common \
-	    -I ${MCU_PATH}/src/common/api \
-	    -I ${MCU_PATH}/src/common/src \
-	    -I ${MCU_STARTUP_PATH} \
+	    -I ${CAR_OS_INC_PATH}/autosar \
+	    -I ${CAR_OS_INC_PATH}/car_os \
+	    -I ${CAR_OS_BOARDSOC_PATH} \
+	    -I ${MCU_PATH}/src 
 
 
 $(info  )
@@ -47,23 +46,29 @@ $(info compiling Dio source files)
 
 DIO_OBJS := \
 	${DIO_PATH}/src/Dio.o \
-	${DIO_PATH}/src/bsp/rp2040/bsp_dio.o \
 	${DIO_PATH}/cfg/Dio_cfg.o
 
 
-LDFLAGS := -g -relocatable
-CFLAGS  := -Werror ${INCDIRS} -g
-ASFLAGS := ${INCDIRS} -g
-TARGET 	:= libDio.la
+# LDFLAGS := -g -relocatable
+# CFLAGS  := -Werror ${INCDIRS} -g
+# ASFLAGS := ${INCDIRS} -g
+TARGET 	:= libDio.a
 # include c_l_flags.mk to add more definitions specific to micro-controller
-include ${ROOT_DIR}/c_l_flags.mk
+include ${CAR_OS_PATH}/c_l_flags.mk
+
+
+%.o: %.c
+	$(CC) -c ${CFLAGS} ${INCDIRS} $< -o $@
+
 
 all: $(TARGET)
 
 LIB_OBJS := $(DIO_OBJS)
 
 $(TARGET): $(LIB_OBJS)
-	$(LD) ${LDFLAGS} -o $@ $^
+	$(AR) -rcs ${TARGET} ${LIB_OBJS}
+
+#	$(LD) ${LDFLAGS} -o $@ $^
 
 clean:
 	$(RM) $(LIB_OBJS) $(TARGET)
