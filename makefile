@@ -34,6 +34,7 @@ INCDIRS  += -I ${DIO_PATH}/src \
 	    -I ${DIO_PATH}/cfg \
 	    -I ${PORT_PATH}/src \
 	    -I ${PORT_PATH}/cfg \
+	    -I ${PORT_PATH}/api \
 	    -I ${CAR_OS_INC_PATH}/autosar \
 	    -I ${CAR_OS_INC_PATH}/car_os \
 	    -I ${CAR_OS_BOARDSOC_PATH} \
